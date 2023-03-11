@@ -57,6 +57,10 @@
       </div>
     </template>
   </div>
+  <!-- 搜索按钮 -->
+  <div class="section search-btn">
+    <div class="btn" @click="searchBtnClick">开始搜索</div>
+  </div>
 </template>
 
 <script setup>
@@ -75,7 +79,7 @@ const cityClick = () => {
 
 //城市回显
 const cityStore = useCityStore();
-const { currentCity } = cityStore;
+const { currentCity } = storeToRefs(cityStore);
 
 //日期范围的处理
 const nowDate = new Date();
@@ -98,6 +102,18 @@ const onConfirm = (value) => {
 //热门建议
 const homeStore = useHomeStore();
 const { hotSuggests } = storeToRefs(homeStore);
+
+//开始搜素
+const searchBtnClick = () => {
+  router.push({
+    path: "/search",
+    query: {
+      startDate: startDate.value,
+      endDate: endDate.value,
+      currentCity: currentCity.value.cityName,
+    },
+  });
+};
 </script>
 <style lang="less" scoped>
 .banner-box {
@@ -189,13 +205,28 @@ const { hotSuggests } = storeToRefs(homeStore);
 }
 .hot-suggests {
   margin: 10px 0;
-
+  height: auto;
   .item {
     padding: 4px 8px;
     margin: 4px;
     border-radius: 14px;
     font-size: 12px;
     line-height: 1;
+  }
+}
+
+.search-btn {
+  .btn {
+    width: 342px;
+    height: 38px;
+    max-height: 50px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 38px;
+    text-align: center;
+    border-radius: 20px;
+    color: #fff;
+    background-image: var(--theme-linear-gradient);
   }
 }
 </style>
