@@ -4,7 +4,7 @@
       <van-index-anchor index="热门" />
       <div class="list">
         <template v-for="(city, index) in groupData.hotCities">
-          <div class="hot-city">
+          <div class="hot-city" @click="cityClick(city)">
             {{ city.cityName }}
           </div>
         </template>
@@ -13,7 +13,7 @@
       <template v-for="(group, index) in groupData.cities">
         <van-index-anchor :index="group.group"></van-index-anchor>
         <template v-for="(city, indey) in group?.cities">
-          <van-cell :title="city.cityName" />
+          <van-cell :title="city.cityName" @click="cityClick(city)" />
         </template>
       </template>
     </van-index-bar>
@@ -21,6 +21,8 @@
 </template>
 
 <script setup>
+import router from "@/router";
+import useCityStore from "@/stores/modules/city";
 import { computed } from "vue";
 
 //定义props
@@ -37,6 +39,13 @@ const indexList = computed(() => {
   list.unshift("#");
   return list;
 });
+
+//城市回显
+const cityStore = useCityStore();
+const cityClick = (city) => {
+  cityStore.currentCity = city;
+  router.back();
+};
 </script>
 <style lang="less" scoped>
 .city-group {
