@@ -6,6 +6,7 @@
     </div>
     <homeBannerBox />
     <homeCategories />
+    <button @click="btnClick">加载更多</button>
   </div>
 </template>
 
@@ -19,6 +20,11 @@ import useHomeStore from "@/stores/modules/home";
 const homeStore = useHomeStore();
 homeStore.fetchHotSuggestData();
 homeStore.fetchCategoriesData();
+homeStore.fetchHouselistData();
+
+const btnClick = () => {
+  homeStore.fetchHouselistData();
+};
 </script>
 
 <style lang="less" scoped>
