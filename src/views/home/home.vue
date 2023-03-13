@@ -11,33 +11,20 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted } from "vue";
 import homeNavBar from "./cpns/home-nav-bar.vue";
 import homeCategories from "./cpns/home-categories.vue";
 import homeBannerBox from "./cpns/home-banner-box.vue";
 import useHomeStore from "@/stores/modules/home";
 import homeContent from "./cpns/home-content.vue";
+import useScroll from "@/hooks/useScroll";
 //发送网络请求
 const homeStore = useHomeStore();
 homeStore.fetchHotSuggestData();
 homeStore.fetchCategoriesData();
 homeStore.fetchHouselistData();
 
-//监听window创建的滚动
-const scrollListenerHandler = () => {
-  const clientHeight = document.documentElement.clientHeight;
-  const scrollTop = document.documentElement.scrollTop;
-  const scrollHeight = document.documentElement.scrollHeight;
-  if (clientHeight + scrollTop >= scrollHeight) {
-    homeStore.fetchHouselistData();
-  }
-};
-
-onMounted(() => {
-  window.addEventListener("scroll", scrollListenerHandler);
-});
-onUnmounted(() => {
-  window.removeEventListener("scroll", scrollListenerHandler);
+useScroll(() => {
+  homeStore.fetchHouselistData();
 });
 </script>
 
