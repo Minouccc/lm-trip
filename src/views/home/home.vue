@@ -11,6 +11,7 @@
 </template>
 
 <script setup>
+import { watch } from "vue";
 import homeNavBar from "./cpns/home-nav-bar.vue";
 import homeCategories from "./cpns/home-categories.vue";
 import homeBannerBox from "./cpns/home-banner-box.vue";
@@ -23,8 +24,13 @@ homeStore.fetchHotSuggestData();
 homeStore.fetchCategoriesData();
 homeStore.fetchHouselistData();
 
-useScroll(() => {
-  homeStore.fetchHouselistData();
+const { isReachBottom } = useScroll();
+watch(isReachBottom, (newValue) => {
+  if (newValue) {
+    homeStore.fetchHouselistData().then(() => {
+      isReachBottom.value = false;
+    });
+  }
 });
 </script>
 
