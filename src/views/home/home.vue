@@ -6,6 +6,7 @@
     </div>
     <homeBannerBox />
     <homeCategories />
+    <homeContent />
     <button @click="btnClick">加载更多</button>
   </div>
 </template>
@@ -15,7 +16,7 @@ import homeNavBar from "./cpns/home-nav-bar.vue";
 import homeCategories from "./cpns/home-categories.vue";
 import homeBannerBox from "./cpns/home-banner-box.vue";
 import useHomeStore from "@/stores/modules/home";
-
+import homeContent from "./cpns/home-content.vue";
 //发送网络请求
 const homeStore = useHomeStore();
 homeStore.fetchHotSuggestData();
