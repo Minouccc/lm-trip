@@ -7,7 +7,6 @@
     <homeBannerBox />
     <homeCategories />
     <homeContent />
-    <button @click="btnClick">加载更多</button>
   </div>
 </template>
 
@@ -23,9 +22,15 @@ homeStore.fetchHotSuggestData();
 homeStore.fetchCategoriesData();
 homeStore.fetchHouselistData();
 
-const btnClick = () => {
-  homeStore.fetchHouselistData();
-};
+//监听window创建的滚动
+window.addEventListener("scroll", () => {
+  const clientHeight = document.documentElement.clientHeight;
+  const scrollTop = document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight;
+  if (clientHeight + scrollTop >= scrollHeight) {
+    homeStore.fetchHouselistData();
+  }
+});
 </script>
 
 <style lang="less" scoped>
