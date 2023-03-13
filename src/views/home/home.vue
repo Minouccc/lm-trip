@@ -6,12 +6,15 @@
     </div>
     <homeBannerBox />
     <homeCategories />
+    <div class="search-bar" v-if="isShowSearchBar">
+      ---------搜索框----------
+    </div>
     <homeContent />
   </div>
 </template>
 
 <script setup>
-import { watch } from "vue";
+import { ref, watch } from "vue";
 import homeNavBar from "./cpns/home-nav-bar.vue";
 import homeCategories from "./cpns/home-categories.vue";
 import homeBannerBox from "./cpns/home-banner-box.vue";
@@ -24,13 +27,19 @@ homeStore.fetchHotSuggestData();
 homeStore.fetchCategoriesData();
 homeStore.fetchHouselistData();
 
-const { isReachBottom } = useScroll();
+const { isReachBottom, scrollTop } = useScroll();
 watch(isReachBottom, (newValue) => {
   if (newValue) {
     homeStore.fetchHouselistData().then(() => {
       isReachBottom.value = false;
     });
   }
+});
+
+//搜索框显示的控制
+const isShowSearchBar = ref(false);
+watch(scrollTop, (newTop) => {
+  isShowSearchBar.value = newTop > 100;
 });
 </script>
 
