@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { computed, watch } from "vue";
 import homeNavBar from "./cpns/home-nav-bar.vue";
 import homeCategories from "./cpns/home-categories.vue";
 import homeBannerBox from "./cpns/home-banner-box.vue";
@@ -37,9 +37,8 @@ watch(isReachBottom, (newValue) => {
 });
 
 //搜索框显示的控制
-const isShowSearchBar = ref(false);
-watch(scrollTop, (newTop) => {
-  isShowSearchBar.value = newTop > 100;
+const isShowSearchBar = computed(() => {
+  return scrollTop.value >= 100;
 });
 </script>
 
