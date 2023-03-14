@@ -1,28 +1,13 @@
 <template>
   <div class="tab-bar">
-    <van-tabbar v-model="currentIndex" active-color="#ff9854">
-      <template v-for="(item, index) in tabbarData">
-        <van-tabbar-item icon="home-o" :to="item.path">
-          <span>{{ item.text }}</span>
-          <template #icon>
-            <img
-              v-if="currentIndex !== index"
-              :src="getAssetURL(item.image)"
-              alt=""
-            />
-            <img v-else :src="getAssetURL(item.imageActive)" alt="" />
-          </template>
-        </van-tabbar-item>
-      </template>
+    <van-tabbar route active-color="#ff9854">
+      <van-tabbar-item icon="wap-home-o" to="/home">首页</van-tabbar-item>
+      <van-tabbar-item icon="like-o" to="/favor">收藏</van-tabbar-item>
+      <van-tabbar-item icon="orders-o" to="/order">订单</van-tabbar-item>
+      <van-tabbar-item icon="chat-o" to="/message">消息</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
 
-<script setup>
-import tabbarData from "@/assets/data/tabbar";
-import getAssetURL from "@/utils/load_assets";
-import { ref } from "vue";
-
-const currentIndex = ref(0);
-</script>
+<script setup></script>
 <style lang="less" scoped></style>

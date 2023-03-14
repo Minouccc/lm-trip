@@ -25,7 +25,6 @@ import { storeToRefs } from "pinia";
 
 const homeStore = useHomeStore();
 const { houselist } = storeToRefs(homeStore);
-console.log(houselist);
 </script>
 <style lang="less" scoped>
 .content {
