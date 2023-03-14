@@ -1,13 +1,23 @@
 <template>
   <div class="detail top-page">
-    {{ $route.params.id }}
+    <van-nav-bar
+      title="房屋详情"
+      left-text="旅途"
+      left-arrow
+      @click-left="onClickLeft"
+    />
   </div>
 </template>
 
 <script setup>
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
-console.log(route.params.id);
+const router = useRouter();
+
+//监听返回按钮的点击
+const onClickLeft = () => {
+  router.back();
+};
 </script>
 <style scoped></style>
