@@ -7,7 +7,8 @@
       @click-left="onClickLeft"
     />
     <div class="main" v-if="mainPart">
-      <detail_01Swipe :swipe-data="mainPart.topModule.housePicture.housePics" />
+      <detail-swipe :swipe-data="mainPart.topModule.housePicture.housePics" />
+      <detail-infos :top-infos="mainPart.topModule" />
     </div>
   </div>
 </template>
@@ -16,7 +17,8 @@
 import { ref, computed } from "vue";
 import { getDetailInfos } from "@/services";
 import { useRoute, useRouter } from "vue-router";
-import detail_01Swipe from "./cpns/detail_01-swipe.vue";
+import DetailSwipe from "./cpns/detail_01-swipe.vue";
+import DetailInfos from "./cpns/detail_02-infos.vue";
 
 const route = useRoute();
 const router = useRouter();
