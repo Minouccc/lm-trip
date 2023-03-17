@@ -17,6 +17,12 @@
       <detail-notice
         :order-rules="mainPart.dynamicModule.rulesModule.orderRules"
       />
+      <detail-map :position="mainPart.dynamicModule.positionModule" />
+      <detail-intro :price-intro="mainPart.introductionModule" />
+    </div>
+    <div class="footer">
+      <img src="@/assets/img/detail/icon_ensure.png" alt="" />
+      <div class="text">弘源旅途, 永无止境!</div>
     </div>
   </div>
 </template>
@@ -31,6 +37,8 @@ import DetailFacility from "./cpns/detail_03-facility.vue";
 import DetailLandlord from "./cpns/detail_04-landlord.vue";
 import DetailComment from "./cpns/detail_05-comment.vue";
 import DetailNotice from "./cpns/detail_06-notice.vue";
+import DetailMap from "./cpns/detail_07-map.vue";
+import DetailIntro from "./cpns/detail_08-intro.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -48,4 +56,22 @@ const onClickLeft = () => {
   router.back();
 };
 </script>
-<style scoped></style>
+<style lang="less" scoped>
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+
+  img {
+    width: 123px;
+  }
+
+  .text {
+    margin-top: 12px;
+    font-size: 12px;
+    color: #7688a7;
+  }
+}
+</style>
