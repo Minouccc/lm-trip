@@ -1,5 +1,10 @@
 <template>
-  <div class="detail top-page">
+  <div class="detail top-page" ref="detailRef">
+    <tab-control
+      v-if="showTabControl"
+      class="tabs"
+      :titles="['abc', 'cba', 'nba', 'mba', 'aaa']"
+    />
     <van-nav-bar
       title="房屋详情"
       left-text="旅途"
@@ -39,6 +44,8 @@ import DetailComment from "./cpns/detail_05-comment.vue";
 import DetailNotice from "./cpns/detail_06-notice.vue";
 import DetailMap from "./cpns/detail_07-map.vue";
 import DetailIntro from "./cpns/detail_08-intro.vue";
+import TabControl from "@/components/tab-control/tab-control.vue";
+import useScroll from "@/hooks/useScroll";
 
 const route = useRoute();
 const router = useRouter();
@@ -55,8 +62,23 @@ getDetailInfos(houseId).then((res) => {
 const onClickLeft = () => {
   router.back();
 };
+
+//tabControl相关操作
+const detailRef = ref();
+const { scrollTop } = useScroll(detailRef);
+const showTabControl = computed(() => {
+  console.log(scrollTop.value);
+  return scrollTop.value > 300;
+});
 </script>
 <style lang="less" scoped>
+.tabs {
+  position: fixed;
+  z-index: 9;
+  left: 0;
+  right: 0;
+  top: 0;
+}
 .footer {
   display: flex;
   flex-direction: column;
