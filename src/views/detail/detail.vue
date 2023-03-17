@@ -3,7 +3,8 @@
     <tab-control
       v-if="showTabControl"
       class="tabs"
-      :titles="['abc', 'cba', 'nba', 'mba', 'aaa']"
+      :titles="names"
+      @tabItemClick="tabClick"
     />
     <van-nav-bar
       title="房屋详情"
@@ -11,18 +12,38 @@
       left-arrow
       @click-left="onClickLeft"
     />
-    <div class="main" v-if="mainPart">
+    <div class="main" v-if="mainPart" v-memo="[mainPart]">
       <detail-swipe :swipe-data="mainPart.topModule.housePicture.housePics" />
-      <detail-infos :top-infos="mainPart.topModule" />
+      <detail-infos
+        name="描述"
+        :ref="getSectionRef"
+        :top-infos="mainPart.topModule"
+      />
       <detail-facility
+        name="设施"
+        :ref="getSectionRef"
         :house-facility="mainPart.dynamicModule.facilityModule.houseFacility"
       />
-      <detail-landlord :landlord="mainPart.dynamicModule.landlordModule" />
-      <detail-comment :comment="mainPart.dynamicModule.commentModule" />
+      <detail-landlord
+        name="房东"
+        :ref="getSectionRef"
+        :landlord="mainPart.dynamicModule.landlordModule"
+      />
+      <detail-comment
+        name="评论"
+        :ref="getSectionRef"
+        :comment="mainPart.dynamicModule.commentModule"
+      />
       <detail-notice
+        name="须知"
+        :ref="getSectionRef"
         :order-rules="mainPart.dynamicModule.rulesModule.orderRules"
       />
-      <detail-map :position="mainPart.dynamicModule.positionModule" />
+      <detail-map
+        name="周边"
+        :ref="getSectionRef"
+        :position="mainPart.dynamicModule.positionModule"
+      />
       <detail-intro :price-intro="mainPart.introductionModule" />
     </div>
     <div class="footer">
@@ -67,9 +88,30 @@ const onClickLeft = () => {
 const detailRef = ref();
 const { scrollTop } = useScroll(detailRef);
 const showTabControl = computed(() => {
-  console.log(scrollTop.value);
   return scrollTop.value > 300;
 });
+
+const sectionEls = ref({});
+const names = computed(() => {
+  return Object.keys(sectionEls.value);
+});
+const getSectionRef = (value) => {
+  const name = value.$el.getAttribute("name");
+  sectionEls.value[name] = value.$el;
+};
+const tabClick = (index) => {
+  const key = Object.keys(sectionEls.value)[index];
+  const el = sectionEls.value[key];
+  let instance = el.offsetTop;
+  if (index !== 0) {
+    instance = instance - 44;
+  }
+
+  detailRef.value.scrollTo({
+    top: instance,
+    behavior: "smooth",
+  });
+};
 </script>
 <style lang="less" scoped>
 .tabs {
